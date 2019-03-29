@@ -13,13 +13,19 @@ open class CustomerDAOImpl : CustomerDAO {
     @Autowired
     private lateinit var sessionFactory: SessionFactory
 
-    @Transactional
     override fun getCustomers(): List<Customer> {
         sessionFactory.currentSession?.apply {
-            createQuery("from Customer", Customer::class.java)?.apply {
+            createQuery("from Customer order by lastName", Customer::class.java)?.apply {
                 return resultList
             }
         }
         return emptyList()
     }
+
+    override fun saveCustomer(customer: Customer) {
+        sessionFactory.currentSession?.apply {
+            save(customer)
+        }
+    }
+
 }

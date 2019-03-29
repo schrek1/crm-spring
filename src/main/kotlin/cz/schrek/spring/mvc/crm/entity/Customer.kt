@@ -11,11 +11,11 @@ data class Customer(
     var id: Int = 0,
 
     @Column(name = "first_name")
-    val firstName: String = "",
+    var firstName: String = "",
 
     @Column(name = "last_name")
-    val lastName: String = "",
+    var lastName: String = "",
 
     @Column(name = "email")
-    val email: String = ""
+    var email: String = ""
 )

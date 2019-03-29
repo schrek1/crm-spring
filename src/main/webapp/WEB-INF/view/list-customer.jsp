@@ -1,9 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html; charset=UTF-8" %>
 
 <html>
 <head>
-    <title>List customers</title>
+    <title>Seznam zákazníků</title>
 
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css"/>
 </head>
@@ -14,6 +13,11 @@
     </div>
 
     <div id="container">
+
+        <input type="button" value="Přidat zákazníka" class="add-button"
+               onclick="window.location.href='showFormForAdd'; return false"
+        />
+
         <div id="content">
             <table>
                 <tr>

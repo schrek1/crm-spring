@@ -1,8 +1,8 @@
-package cz.schrek.spring.mvc.crm.dao
+package cz.schrek.spring.mvc.crm.service
 
 import cz.schrek.spring.mvc.crm.entity.Customer
 
-interface CustomerDAO {
+interface CustomerService {
 
     fun getCustomers(): List<Customer>
 

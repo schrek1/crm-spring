@@ -11,4 +11,10 @@ interface CustomerDAO {
     fun getCustomer(customerId: Int): Customer?
 
     fun deleteCustomer(customerId: Int)
+
+    fun getCustomerByFirstName(searchText: String): List<Customer>
+
+    fun getCustomerByEmail(searchText: String): List<Customer>
+
+    fun getCustomerByLastName(searchText: String): List<Customer>
 }

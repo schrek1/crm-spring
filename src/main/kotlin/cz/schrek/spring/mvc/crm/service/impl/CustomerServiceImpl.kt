@@ -23,4 +23,14 @@ open class CustomerServiceImpl : CustomerService {
 
     @Transactional
     override fun deleteCustomer(customerId: Int) = customerDAO.deleteCustomer(customerId)
+
+    @Transactional
+    override fun searchCustomer(searchText: String) =
+        customerDAO.getCustomerByFirstName(searchText).union(
+            customerDAO.getCustomerByEmail(searchText)
+        ).union(
+            customerDAO.getCustomerByLastName(searchText)
+        ).toList()
+
+
 }

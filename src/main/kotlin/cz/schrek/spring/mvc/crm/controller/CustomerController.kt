@@ -45,4 +45,10 @@ class CustomerController {
         customerService.deleteCustomer(customerId)
         "redirect:/customer/list"
     }
+
+    @GetMapping("/search")
+    fun searchUser(@RequestParam("searchText") searchText: String, model: Model) = run {
+        model.addAttribute("customers", customerService.searchCustomer(searchText))
+        "list-customer"
+    }
 }

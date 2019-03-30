@@ -12,4 +12,6 @@ interface CustomerService {
 
     fun deleteCustomer(customerId: Int)
 
+    fun searchCustomer(searchText: String): List<Customer>
+
 }

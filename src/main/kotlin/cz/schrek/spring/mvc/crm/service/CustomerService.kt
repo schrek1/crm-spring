@@ -8,4 +8,8 @@ interface CustomerService {
 
     fun saveCustomer(customer: Customer)
 
+    fun getCustomer(customerId: Int): Customer?
+
+    fun deleteCustomer(customerId: Int)
+
 }

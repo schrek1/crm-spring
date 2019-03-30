@@ -16,5 +16,11 @@ open class CustomerServiceImpl : CustomerService {
     override fun getCustomers() = customerDAO.getCustomers()
 
     @Transactional
-    override fun saveCustomer(customer: Customer)  = customerDAO.saveCustomer(customer)
+    override fun saveCustomer(customer: Customer) = customerDAO.saveCustomer(customer)
+
+    @Transactional
+    override fun getCustomer(customerId: Int) = customerDAO.getCustomer(customerId)
+
+    @Transactional
+    override fun deleteCustomer(customerId: Int) = customerDAO.deleteCustomer(customerId)
 }

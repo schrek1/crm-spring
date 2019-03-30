@@ -24,13 +24,32 @@
                     <th>Jméno</th>
                     <th>Příjmení</th>
                     <th>Email</th>
+                    <th>Akce</th>
                 </tr>
 
+                <%--@elvariable id="customers" type="java.util.List<cz.schrek.spring.mvc.crm.entity.Customer>"--%>
                 <c:forEach var="tempCustomer" items="${customers}">
+
+                    <c:url var="updateLink" value="/customer/showFormForUpdate">
+                        <c:param name="customerId" value="${tempCustomer.id}"/>
+                    </c:url>
+
+                    <c:url var="deleteLink" value="/customer/delete">
+                        <c:param name="customerId" value="${tempCustomer.id}"/>
+                    </c:url>
+
+                    <c:set var="alertTitle"
+                           value="Vážně chcete smazat uživazatele ${not empty tempCustomer.firstName ? tempCustomer.firstName :''}${not empty tempCustomer.firstName && not empty tempCustomer.lastName ? ' ' :''}${not empty tempCustomer.lastName ? tempCustomer.lastName :''}?"/>
+
                     <tr>
                         <td>${tempCustomer.firstName}</td>
                         <td>${tempCustomer.lastName}</td>
                         <td>${tempCustomer.email}</td>
+                        <td>
+                            <a href=" ${updateLink}">Upravit</a>
+                            |
+                            <a href="${deleteLink}" onclick="if(!(confirm('${alertTitle}'))) return false">Smazat</a>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>

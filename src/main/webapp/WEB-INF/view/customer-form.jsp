@@ -1,4 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 
 <html>
 <head>
@@ -19,7 +21,13 @@
     <div id="container">
         <h3>Uložit zákazníka</h3>
 
-        <form:form action="saveCustomer" modelAttribute="customer" method="POST">
+        <c:url var="saveCustomer" value="/customer/saveCustomer"/>
+
+        <%--@elvariable id="customer" type="cz.schrek.spring.mvc.crm.entity.Customer"--%>
+        <form:form action="${saveCustomer}" modelAttribute="customer" method="POST">
+
+            <form:hidden path="id"/>
+
             <table>
                 <tbody>
                 <tr>

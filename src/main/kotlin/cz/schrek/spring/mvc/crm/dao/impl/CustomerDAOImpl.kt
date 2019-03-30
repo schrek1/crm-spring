@@ -5,7 +5,6 @@ import cz.schrek.spring.mvc.crm.entity.Customer
 import org.hibernate.SessionFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
-import javax.transaction.Transactional
 
 @Repository
 open class CustomerDAOImpl : CustomerDAO {
@@ -13,19 +12,32 @@ open class CustomerDAOImpl : CustomerDAO {
     @Autowired
     private lateinit var sessionFactory: SessionFactory
 
-    override fun getCustomers(): List<Customer> {
-        sessionFactory.currentSession?.apply {
-            createQuery("from Customer order by lastName", Customer::class.java)?.apply {
-                return resultList
-            }
+    private val clazz = Customer::class.java
+
+    override fun getCustomers() = sessionFactory.currentSession?.run {
+        createQuery("from Customer order by lastName", clazz)?.run {
+            resultList.toList()
         }
-        return emptyList()
-    }
+    } ?: emptyList()
+
 
     override fun saveCustomer(customer: Customer) {
         sessionFactory.currentSession?.apply {
-            save(customer)
+            saveOrUpdate(customer)
         }
     }
 
+
+    override fun getCustomer(customerId: Int) = sessionFactory.currentSession?.run {
+        get(clazz, customerId)
+    }
+
+    override fun deleteCustomer(customerId: Int) {
+        sessionFactory.currentSession?.apply {
+            createQuery("delete from Customer where id=:customerId").apply {
+                setParameter("customerId", customerId)
+                executeUpdate()
+            }
+        }
+    }
 }

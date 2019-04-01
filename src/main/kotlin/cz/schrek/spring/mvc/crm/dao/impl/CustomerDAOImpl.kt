@@ -42,7 +42,7 @@ open class CustomerDAOImpl : CustomerDAO {
     }
 
     override fun getCustomerByFirstName(searchText: String) = sessionFactory.currentSession?.run {
-        return@run createQuery(
+        createQuery(
             "from Customer where firstName like :searchText or lower(firstName) like :searchText",
             clazz
         )?.run {
@@ -52,7 +52,7 @@ open class CustomerDAOImpl : CustomerDAO {
     } ?: emptyList<Customer>()
 
     override fun getCustomerByEmail(searchText: String) = sessionFactory.currentSession?.run {
-        return@run createQuery(
+        createQuery(
             "from Customer where email like :searchText or lower(email) like :searchText",
             clazz
         )?.run {
@@ -62,7 +62,7 @@ open class CustomerDAOImpl : CustomerDAO {
     } ?: emptyList<Customer>()
 
     override fun getCustomerByLastName(searchText: String) = sessionFactory.currentSession?.run {
-        return@run createQuery(
+        createQuery(
             "from Customer where lastName like :searchText or lower(lastName) like :searchText",
             clazz
         )?.run {

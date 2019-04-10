@@ -41,9 +41,9 @@ open class CustomerDAOImpl : CustomerDAO {
         }
     }
 
-    override fun getCustomerByFirstName(searchText: String) = sessionFactory.currentSession?.run {
+    override fun getCustomersByFirstName(searchText: String) = sessionFactory.currentSession?.run {
         createQuery(
-            "from Customer where firstName like :searchText or lower(firstName) like :searchText",
+            "from Customer where firstName like :searchText or lower(firstName) like :searchText order by lastName",
             clazz
         )?.run {
             setParameter("searchText", "%$searchText%")
@@ -51,9 +51,9 @@ open class CustomerDAOImpl : CustomerDAO {
         }
     } ?: emptyList<Customer>()
 
-    override fun getCustomerByEmail(searchText: String) = sessionFactory.currentSession?.run {
+    override fun getCustomersByEmail(searchText: String) = sessionFactory.currentSession?.run {
         createQuery(
-            "from Customer where email like :searchText or lower(email) like :searchText",
+            "from Customer where email like :searchText or lower(email) like :searchText order by lastName",
             clazz
         )?.run {
             setParameter("searchText", "%$searchText%")
@@ -61,9 +61,23 @@ open class CustomerDAOImpl : CustomerDAO {
         }
     } ?: emptyList<Customer>()
 
-    override fun getCustomerByLastName(searchText: String) = sessionFactory.currentSession?.run {
+    override fun getCustomersByLastName(searchText: String) = sessionFactory.currentSession?.run {
         createQuery(
-            "from Customer where lastName like :searchText or lower(lastName) like :searchText",
+            "from Customer where lastName like :searchText or lower(lastName) like :searchText order by lastName",
+            clazz
+        )?.run {
+            setParameter("searchText", "%$searchText%")
+            list()?.toList()
+        }
+    } ?: emptyList<Customer>()
+
+    override fun getCustomersByFullTextSearch(searchText: String): List<Customer> = sessionFactory.currentSession?.run {
+        createQuery(
+            "from Customer where " +
+                    "firstName like :searchText or lower(firstName) like :searchText or " +
+                    "lastName like :searchText or lower(lastName) like :searchText or " +
+                    "email like :searchText or lower(email) like :searchText " +
+                    "order by lastName",
             clazz
         )?.run {
             setParameter("searchText", "%$searchText%")

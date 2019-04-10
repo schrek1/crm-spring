@@ -16,6 +16,7 @@ class CustomerController {
 
     @GetMapping("/list")
     fun listCustomers(model: Model) = run {
+        model.addAttribute("searchText", "")
         model.addAttribute("customers", customerService.getCustomers())
         "list-customer"
     }
@@ -48,6 +49,7 @@ class CustomerController {
 
     @GetMapping("/search")
     fun searchUser(@RequestParam("searchText") searchText: String, model: Model) = run {
+        model.addAttribute("searchText", searchText)
         model.addAttribute("customers", customerService.searchCustomer(searchText))
         "list-customer"
     }

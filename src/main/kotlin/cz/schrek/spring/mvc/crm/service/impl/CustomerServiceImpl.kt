@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 import javax.transaction.Transactional
 
 @Service
-open class CustomerServiceImpl : CustomerService {
+class CustomerServiceImpl : CustomerService {
     @Autowired
     private lateinit var customerDAO: CustomerDAO
 
@@ -25,12 +25,5 @@ open class CustomerServiceImpl : CustomerService {
     override fun deleteCustomer(customerId: Int) = customerDAO.deleteCustomer(customerId)
 
     @Transactional
-    override fun searchCustomer(searchText: String) =
-        customerDAO.getCustomerByFirstName(searchText).union(
-            customerDAO.getCustomerByEmail(searchText)
-        ).union(
-            customerDAO.getCustomerByLastName(searchText)
-        ).toList()
-
-
+    override fun searchCustomer(searchText: String) = customerDAO.getCustomersByFullTextSearch(searchText)
 }

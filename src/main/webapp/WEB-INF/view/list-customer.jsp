@@ -1,6 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<%--@elvariable id="searchText" type="java.lang.String"--%>
+<%--@elvariable id="customers" type="java.util.List<cz.schrek.spring.mvc.crm.entity.Customer>"--%>
+
+
+<c:url var="searchLink" value="/customer/search"/>
+<c:url var="customerListLink" value="/customer/list"/>
+
 <html>
 <head>
     <title>Seznam zákazníků</title>
@@ -20,12 +27,16 @@
         />
 
         <div id="content">
-            <c:url var="search" value="/customer/search"/>
-            <form:form action="${search}" method="GET">
+            <form:form action="${searchLink}" method="GET">
                 <tr>
                     <td><label>Hledat zákazníka:</label></td>
-                    <td><input type="text" name="searchText"/></td>
+                    <td><input type="text" name="searchText" value="${searchText}" }/></td>
                     <td><input type="submit" value="Hledat" class="add-button"></td>
+                    <td>
+                        <a href="${customerListLink}">
+                            <input type="button" value="Zrušit filtr" class="add-button">
+                        </a>
+                    </td>
                 </tr>
             </form:form>
             <table>
@@ -36,7 +47,6 @@
                     <th>Akce</th>
                 </tr>
 
-                <%--@elvariable id="customers" type="java.util.List<cz.schrek.spring.mvc.crm.entity.Customer>"--%>
                 <c:forEach var="tempCustomer" items="${customers}">
 
                     <c:url var="updateLink" value="/customer/showFormForUpdate">

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 
 @Repository
-open class CustomerDAOImpl : CustomerDAO {
+class CustomerDAOImpl : CustomerDAO {
 
     @Autowired
     private lateinit var sessionFactory: SessionFactory
@@ -83,5 +83,5 @@ open class CustomerDAOImpl : CustomerDAO {
             setParameter("searchText", "%$searchText%")
             list()?.toList()
         }
-    } ?: emptyList<Customer>()
+    } ?: emptyList()
 }

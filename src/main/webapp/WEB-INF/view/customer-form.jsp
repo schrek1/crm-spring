@@ -15,9 +15,9 @@
 <body>
 
 <div id="wrapper">
-    <div id="header">
-        <h2>CRM - Customer Relationship Manager</h2>
-    </div>
+
+    <jsp:include page="secure-page-header.jsp"/>
+
     <div id="container">
         <h3>Uložit zákazníka</h3>
 

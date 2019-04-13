@@ -16,15 +16,13 @@
 </head>
 <body>
 <div id="wrapper">
-    <div id="window-header">
-        <h2>CRM - Customer Relationship Manager</h2>
-    </div>
+
+    <jsp:include page="secure-page-header.jsp"/>
 
     <div id="container">
 
         <input type="button" value="Přidat zákazníka" class="add-button"
-               onclick="window.location.href='showFormForAdd'; return false"
-        />
+               onclick="window.location.href='showFormForAdd'; return false" style="margin-top: 20px;">
 
         <div id="content">
             <form:form action="${searchLink}" method="GET">

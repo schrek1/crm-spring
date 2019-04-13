@@ -31,8 +31,6 @@
                     <div class="form-group">
                         <div class="col-xs-15">
                             <div>
-
-                                <!-- Check for login error -->
                                 <c:if test="${param.error != null}">
                                     <div class="alert alert-danger col-xs-offset-1 col-xs-10">
                                         Nesprávné údaje pro přihlášení.
@@ -44,24 +42,20 @@
                                         Byli jste odhlášeni ze systému.
                                     </div>
                                 </c:if>
-
                             </div>
                         </div>
                     </div>
 
-                    <!-- User name -->
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                         <input type="text" name="username" placeholder="uživatelské jméno" class="form-control">
                     </div>
 
-                    <!-- Password -->
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                         <input type="password" name="password" placeholder="heslo" class="form-control">
                     </div>
 
-                    <!-- Login/Submit Button -->
                     <div style="margin-top: 10px" class="form-group">
                         <div class="col-sm-6 controls">
                             <button type="submit" class="btn btn-success">Přihlášení</button>

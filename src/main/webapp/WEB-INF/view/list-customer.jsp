@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <%--@elvariable id="searchText" type="java.lang.String"--%>
 <%--@elvariable id="customers" type="java.util.List<cz.schrek.spring.mvc.crm.entity.Customer>"--%>
@@ -7,6 +8,8 @@
 
 <c:url var="searchLink" value="/customer/search"/>
 <c:url var="customerListLink" value="/customer/list"/>
+<c:url var="adminConsoleLink" value="/admin"/>
+<c:url var="managerDashboardLink" value="/manager"/>
 
 <html>
 <head>
@@ -23,6 +26,17 @@
 
         <input type="button" value="Přidat zákazníka" class="add-button"
                onclick="window.location.href='showFormForAdd'; return false" style="margin-top: 20px;">
+
+        <security:authorize access="hasAuthority('MANAGER')">
+            <input type="button" value="Manager board" class="add-button"
+                   onclick="window.location.href='${managerDashboardLink}'; return false" style="margin-top: 20px;">
+
+        </security:authorize>
+
+        <security:authorize access="hasAuthority('ADMIN')">
+            <input type="button" value="Admin console" class="add-button"
+                   onclick="window.location.href='${adminConsoleLink}'; return false" style="margin-top: 20px;">
+        </security:authorize>
 
         <div id="content">
             <form:form action="${searchLink}" method="GET">

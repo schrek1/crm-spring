@@ -5,36 +5,43 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-import org.springframework.security.core.userdetails.User
+import javax.sql.DataSource
+
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig : WebSecurityConfigurerAdapter() {
+class SecurityConfig(
+    private val dataSource: DataSource
+) : WebSecurityConfigurerAdapter() {
+
 
     override fun configure(http: HttpSecurity?) {
         http!!.authorizeRequests()
-            .anyRequest().authenticated()
+            .antMatchers("/customer/**").hasAuthority("EMPLOYEE")
+            .antMatchers("/admin/**").hasAuthority("ADMIN")
+            .antMatchers("/manager/**").hasAuthority("MANAGER")
             .and()
-            .formLogin()
-            .loginPage("/login")
-            .loginProcessingUrl("/processLogin")
-            .permitAll()
+            .formLogin().loginPage("/login").loginProcessingUrl("/processLogin").permitAll()
             .and()
-            .logout()
-            .logoutUrl("/logout")
-            .permitAll()
+            .logout().logoutUrl("/logout").permitAll()
+            .and()
+            .exceptionHandling().accessDeniedPage("/access-denied")
     }
 
     override fun configure(auth: AuthenticationManagerBuilder) {
-        // add our users for in memory authentication
-        val users = User.withDefaultPasswordEncoder()
-
-        auth.inMemoryAuthentication()
-            .withUser(users.username("novak").password("123").roles("EMPLOYEE"))
-            .withUser(users.username("plasil").password("123").roles("MANAGER"))
-            .withUser(users.username("admin").password("123").roles("ADMIN"))
+        auth.jdbcAuthentication()
+            .dataSource(dataSource)
+            .usersByUsernameQuery(
+                "SELECT username, password, enabled " +
+                        "FROM user " +
+                        "WHERE username = ?"
+            )
+            .authoritiesByUsernameQuery(
+                "SELECT username, authority " +
+                        "FROM user_authority " +
+                        "WHERE username = ?"
+            )
     }
-
 }
 
 

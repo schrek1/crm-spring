@@ -31,6 +31,12 @@
                     <div class="form-group">
                         <div class="col-xs-15">
                             <div>
+                                <c:if test="${param.expired != null}">
+                                    <div class="alert alert-danger col-xs-offset-1 col-xs-10">
+                                        Doba přihlášení vypršela, musíte se znovu přihlásit.
+                                    </div>
+                                </c:if>
+
                                 <c:if test="${param.error != null}">
                                     <div class="alert alert-danger col-xs-offset-1 col-xs-10">
                                         Nesprávné údaje pro přihlášení.
